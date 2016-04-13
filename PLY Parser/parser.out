@@ -1,0 +1,58 @@
+Created by PLY version 3.8 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    INTEGER
+
+Grammar
+
+Rule 0     S' -> start
+Rule 1     start -> PID
+Rule 2     start -> empty
+Rule 3     empty -> <empty>
+
+Terminals, with rules where they appear
+
+INTEGER              : 
+PID                  : 1
+error                : 
+
+Nonterminals, with rules where they appear
+
+empty                : 2
+start                : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . start
+    (1) start -> . PID
+    (2) start -> . empty
+    (3) empty -> .
+
+    PID             shift and go to state 2
+    $end            reduce using rule 3 (empty -> .)
+
+    start                          shift and go to state 1
+    empty                          shift and go to state 3
+
+state 1
+
+    (0) S' -> start .
+
+
+
+state 2
+
+    (1) start -> PID .
+
+    $end            reduce using rule 1 (start -> PID .)
+
+
+state 3
+
+    (2) start -> empty .
+
+    $end            reduce using rule 2 (start -> empty .)
+

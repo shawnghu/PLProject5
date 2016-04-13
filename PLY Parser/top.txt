@@ -1,10 +1,4 @@
-top - 12:12:50 up 20 days, 17:42,  2 users,  load average: 0.34, 0.30, 0.25
-Tasks: 251 total,   1 running, 250 sleeping,   0 stopped,   0 zombie
-%Cpu(s):  3.8 us,  0.8 sy,  0.0 ni, 94.7 id,  0.6 wa,  0.0 hi,  0.0 si,  0.0 st
-KiB Mem:   3968328 total,  2966048 used,  1002280 free,   222572 buffers
-KiB Swap:  4104188 total,     1948 used,  4102240 free.  1775392 cached Mem
-
-  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+ PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
 26391 chris     20   0 5601096 559616  78884 S  13.0 14.1  17:37.79 iceweasel
  1272 root      20   0  377816 169696  19076 S   6.5  4.3  23:57.39 Xorg
     1 root      20   0   29348   5316   3096 S   0.0  0.1   0:04.44 systemd
