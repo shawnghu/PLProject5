@@ -1,25 +1,32 @@
 Created by PLY version 3.8 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    INTEGER
-
 Grammar
 
 Rule 0     S' -> start
-Rule 1     start -> PID
-Rule 2     start -> empty
-Rule 3     empty -> <empty>
+Rule 1     start -> header
+Rule 2     start -> data
+Rule 3     start -> empty
+Rule 4     header -> STRING STRING STRING STRING STRING STRING STRING STRING % STRING % STRING STRING STRING
+Rule 5     float -> INTEGER . INTEGER
+Rule 6     data -> INTEGER STRING STRING INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING
+Rule 7     data -> INTEGER STRING INTEGER INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING
+Rule 8     empty -> <empty>
 
 Terminals, with rules where they appear
 
-INTEGER              : 
-PID                  : 1
+%                    : 4 4
+.                    : 5
+:                    : 6 7
+INTEGER              : 5 5 6 6 6 6 6 6 7 7 7 7 7 7 7
+STRING               : 4 4 4 4 4 4 4 4 4 4 4 4 6 6 6 6 7 7 7
 error                : 
 
 Nonterminals, with rules where they appear
 
-empty                : 2
+data                 : 2
+empty                : 3
+float                : 6 6 6 7 7 7
+header               : 1
 start                : 0
 
 Parsing method: LALR
@@ -27,32 +34,363 @@ Parsing method: LALR
 state 0
 
     (0) S' -> . start
-    (1) start -> . PID
-    (2) start -> . empty
-    (3) empty -> .
+    (1) start -> . header
+    (2) start -> . data
+    (3) start -> . empty
+    (4) header -> . STRING STRING STRING STRING STRING STRING STRING STRING % STRING % STRING STRING STRING
+    (6) data -> . INTEGER STRING STRING INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING
+    (7) data -> . INTEGER STRING INTEGER INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING
+    (8) empty -> .
 
-    PID             shift and go to state 2
-    $end            reduce using rule 3 (empty -> .)
+    STRING          shift and go to state 1
+    INTEGER         shift and go to state 4
+    $end            reduce using rule 8 (empty -> .)
 
-    start                          shift and go to state 1
-    empty                          shift and go to state 3
+    start                          shift and go to state 3
+    data                           shift and go to state 5
+    empty                          shift and go to state 6
+    header                         shift and go to state 2
 
 state 1
+
+    (4) header -> STRING . STRING STRING STRING STRING STRING STRING STRING % STRING % STRING STRING STRING
+
+    STRING          shift and go to state 7
+
+
+state 2
+
+    (1) start -> header .
+
+    $end            reduce using rule 1 (start -> header .)
+
+
+state 3
 
     (0) S' -> start .
 
 
 
-state 2
+state 4
 
-    (1) start -> PID .
+    (6) data -> INTEGER . STRING STRING INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING
+    (7) data -> INTEGER . STRING INTEGER INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING
 
-    $end            reduce using rule 1 (start -> PID .)
+    STRING          shift and go to state 8
 
 
-state 3
+state 5
 
-    (2) start -> empty .
+    (2) start -> data .
 
-    $end            reduce using rule 2 (start -> empty .)
+    $end            reduce using rule 2 (start -> data .)
+
+
+state 6
+
+    (3) start -> empty .
+
+    $end            reduce using rule 3 (start -> empty .)
+
+
+state 7
+
+    (4) header -> STRING STRING . STRING STRING STRING STRING STRING STRING % STRING % STRING STRING STRING
+
+    STRING          shift and go to state 9
+
+
+state 8
+
+    (6) data -> INTEGER STRING . STRING INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING
+    (7) data -> INTEGER STRING . INTEGER INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING
+
+    STRING          shift and go to state 11
+    INTEGER         shift and go to state 10
+
+
+state 9
+
+    (4) header -> STRING STRING STRING . STRING STRING STRING STRING STRING % STRING % STRING STRING STRING
+
+    STRING          shift and go to state 12
+
+
+state 10
+
+    (7) data -> INTEGER STRING INTEGER . INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING
+
+    INTEGER         shift and go to state 13
+
+
+state 11
+
+    (6) data -> INTEGER STRING STRING . INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING
+
+    INTEGER         shift and go to state 14
+
+
+state 12
+
+    (4) header -> STRING STRING STRING STRING . STRING STRING STRING STRING % STRING % STRING STRING STRING
+
+    STRING          shift and go to state 15
+
+
+state 13
+
+    (7) data -> INTEGER STRING INTEGER INTEGER . INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING
+
+    INTEGER         shift and go to state 16
+
+
+state 14
+
+    (6) data -> INTEGER STRING STRING INTEGER . INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING
+
+    INTEGER         shift and go to state 17
+
+
+state 15
+
+    (4) header -> STRING STRING STRING STRING STRING . STRING STRING STRING % STRING % STRING STRING STRING
+
+    STRING          shift and go to state 18
+
+
+state 16
+
+    (7) data -> INTEGER STRING INTEGER INTEGER INTEGER . INTEGER INTEGER STRING float float INTEGER : float STRING
+
+    INTEGER         shift and go to state 19
+
+
+state 17
+
+    (6) data -> INTEGER STRING STRING INTEGER INTEGER . INTEGER INTEGER STRING float float INTEGER : float STRING
+
+    INTEGER         shift and go to state 20
+
+
+state 18
+
+    (4) header -> STRING STRING STRING STRING STRING STRING . STRING STRING % STRING % STRING STRING STRING
+
+    STRING          shift and go to state 21
+
+
+state 19
+
+    (7) data -> INTEGER STRING INTEGER INTEGER INTEGER INTEGER . INTEGER STRING float float INTEGER : float STRING
+
+    INTEGER         shift and go to state 22
+
+
+state 20
+
+    (6) data -> INTEGER STRING STRING INTEGER INTEGER INTEGER . INTEGER STRING float float INTEGER : float STRING
+
+    INTEGER         shift and go to state 23
+
+
+state 21
+
+    (4) header -> STRING STRING STRING STRING STRING STRING STRING . STRING % STRING % STRING STRING STRING
+
+    STRING          shift and go to state 24
+
+
+state 22
+
+    (7) data -> INTEGER STRING INTEGER INTEGER INTEGER INTEGER INTEGER . STRING float float INTEGER : float STRING
+
+    STRING          shift and go to state 25
+
+
+state 23
+
+    (6) data -> INTEGER STRING STRING INTEGER INTEGER INTEGER INTEGER . STRING float float INTEGER : float STRING
+
+    STRING          shift and go to state 26
+
+
+state 24
+
+    (4) header -> STRING STRING STRING STRING STRING STRING STRING STRING . % STRING % STRING STRING STRING
+
+    %               shift and go to state 27
+
+
+state 25
+
+    (7) data -> INTEGER STRING INTEGER INTEGER INTEGER INTEGER INTEGER STRING . float float INTEGER : float STRING
+    (5) float -> . INTEGER . INTEGER
+
+    INTEGER         shift and go to state 28
+
+    float                          shift and go to state 29
+
+state 26
+
+    (6) data -> INTEGER STRING STRING INTEGER INTEGER INTEGER INTEGER STRING . float float INTEGER : float STRING
+    (5) float -> . INTEGER . INTEGER
+
+    INTEGER         shift and go to state 28
+
+    float                          shift and go to state 30
+
+state 27
+
+    (4) header -> STRING STRING STRING STRING STRING STRING STRING STRING % . STRING % STRING STRING STRING
+
+    STRING          shift and go to state 31
+
+
+state 28
+
+    (5) float -> INTEGER . . INTEGER
+
+    .               shift and go to state 32
+
+
+state 29
+
+    (7) data -> INTEGER STRING INTEGER INTEGER INTEGER INTEGER INTEGER STRING float . float INTEGER : float STRING
+    (5) float -> . INTEGER . INTEGER
+
+    INTEGER         shift and go to state 28
+
+    float                          shift and go to state 33
+
+state 30
+
+    (6) data -> INTEGER STRING STRING INTEGER INTEGER INTEGER INTEGER STRING float . float INTEGER : float STRING
+    (5) float -> . INTEGER . INTEGER
+
+    INTEGER         shift and go to state 28
+
+    float                          shift and go to state 34
+
+state 31
+
+    (4) header -> STRING STRING STRING STRING STRING STRING STRING STRING % STRING . % STRING STRING STRING
+
+    %               shift and go to state 35
+
+
+state 32
+
+    (5) float -> INTEGER . . INTEGER
+
+    INTEGER         shift and go to state 36
+
+
+state 33
+
+    (7) data -> INTEGER STRING INTEGER INTEGER INTEGER INTEGER INTEGER STRING float float . INTEGER : float STRING
+
+    INTEGER         shift and go to state 37
+
+
+state 34
+
+    (6) data -> INTEGER STRING STRING INTEGER INTEGER INTEGER INTEGER STRING float float . INTEGER : float STRING
+
+    INTEGER         shift and go to state 38
+
+
+state 35
+
+    (4) header -> STRING STRING STRING STRING STRING STRING STRING STRING % STRING % . STRING STRING STRING
+
+    STRING          shift and go to state 39
+
+
+state 36
+
+    (5) float -> INTEGER . INTEGER .
+
+    INTEGER         reduce using rule 5 (float -> INTEGER . INTEGER .)
+    STRING          reduce using rule 5 (float -> INTEGER . INTEGER .)
+
+
+state 37
+
+    (7) data -> INTEGER STRING INTEGER INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER . : float STRING
+
+    :               shift and go to state 40
+
+
+state 38
+
+    (6) data -> INTEGER STRING STRING INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER . : float STRING
+
+    :               shift and go to state 41
+
+
+state 39
+
+    (4) header -> STRING STRING STRING STRING STRING STRING STRING STRING % STRING % STRING . STRING STRING
+
+    STRING          shift and go to state 42
+
+
+state 40
+
+    (7) data -> INTEGER STRING INTEGER INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : . float STRING
+    (5) float -> . INTEGER . INTEGER
+
+    INTEGER         shift and go to state 28
+
+    float                          shift and go to state 43
+
+state 41
+
+    (6) data -> INTEGER STRING STRING INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : . float STRING
+    (5) float -> . INTEGER . INTEGER
+
+    INTEGER         shift and go to state 28
+
+    float                          shift and go to state 44
+
+state 42
+
+    (4) header -> STRING STRING STRING STRING STRING STRING STRING STRING % STRING % STRING STRING . STRING
+
+    STRING          shift and go to state 45
+
+
+state 43
+
+    (7) data -> INTEGER STRING INTEGER INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float . STRING
+
+    STRING          shift and go to state 46
+
+
+state 44
+
+    (6) data -> INTEGER STRING STRING INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float . STRING
+
+    STRING          shift and go to state 47
+
+
+state 45
+
+    (4) header -> STRING STRING STRING STRING STRING STRING STRING STRING % STRING % STRING STRING STRING .
+
+    $end            reduce using rule 4 (header -> STRING STRING STRING STRING STRING STRING STRING STRING % STRING % STRING STRING STRING .)
+
+
+state 46
+
+    (7) data -> INTEGER STRING INTEGER INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING .
+
+    $end            reduce using rule 7 (data -> INTEGER STRING INTEGER INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING .)
+
+
+state 47
+
+    (6) data -> INTEGER STRING STRING INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING .
+
+    $end            reduce using rule 6 (data -> INTEGER STRING STRING INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER : float STRING .)
 

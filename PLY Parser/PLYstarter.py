@@ -1,12 +1,12 @@
-tokens = ('PID', 'INTEGER')
-literals = ['.', ':' ]
+tokens = ('INTEGER','STRING')
+literals = ['.', ':' , '%', '+']
 
 # Tokens
-t_PID  = r'^.*PID.*$'
 
+t_STRING = r'[(a-zA-Z]+[a-zA-Z\._/\-0-9:)\+]*'
 
 def t_INTEGER(t):
-    r'\d+'
+    r'-?\d+'
     try:
         t.value = int(t.value)
     except ValueError:
@@ -15,7 +15,7 @@ def t_INTEGER(t):
     return t
 
 # Ignored characters
-t_ignore = " \r"
+t_ignore = " \t\r\n"
 
 def t_newline(t):
     r'\n+'
@@ -35,11 +35,25 @@ global time_step
 time_step = 0
 
 def p_start(t):
-    '''start : PID
+    '''start : header
+             | data
              | empty
     '''
-    print "Saw :", t[1]
+#    print "Saw :", t[1]
 
+def p_header(t):
+    'header : STRING STRING STRING STRING STRING STRING STRING STRING "%" STRING "%" STRING STRING STRING'
+    print "Saw header"
+
+def p_float(t):
+    'float : INTEGER "." INTEGER'
+    t[0] = str(t[1]) + str(t[2]) + str(t[3])
+
+def p_data(t):
+    '''data : INTEGER STRING STRING INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER ":" float STRING
+            | INTEGER STRING INTEGER INTEGER INTEGER INTEGER INTEGER STRING float float INTEGER ":" float STRING
+    '''
+    print "insert into toptb(pid, user, pr, ni, virt, res, shr, s, percpu, permem, plustime, command) values (",str(t[1]),", ",str(t[2]), ", ",str(t[3]), ", ", str(t[4]), ", ",str(t[5]),", ",str(t[6]), ", ",str(t[7]), ", ", str(t[8]), ", ",str(t[9]),", ",str(t[10]), ", ",str(t[11])+str(t[12])+str(t[13]), ", ", str(t[14]),")"
 
 def p_empty(t):
     'empty : '
@@ -61,4 +75,4 @@ while True:
         break
     parser.parse(s)
 
-# To run the parser do the following in a terminal window: echo "Header1 is this~Header2 and that~~Data 1.0~Data 2.0" | tr "~" "\n" | grep -v '^\s*$' | python PLYstarter.py | sed "s/_~_/ which is a float./"
+# To run the parser do the following in a terminal window: py | sed "s/_~_/ which is a float./"
