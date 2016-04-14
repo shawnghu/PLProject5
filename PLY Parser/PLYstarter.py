@@ -75,4 +75,4 @@ while True:
         break
     parser.parse(s)
 
-# To run the parser do the following in a terminal window: py | sed "s/_~_/ which is a float./"
+# To run the parser do the following in a terminal window: cat top.txt | python PLYstarter.py
